@@ -1,36 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:projeto_escola/Pages/registar.dart';
+import 'package:projeto_escola/Pages/login.dart';
 
-class Login extends StatefulWidget {
+class Registar extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _RegistarState createState() => _RegistarState();
 }
 
-class _LoginState extends State<Login> {
+class _RegistarState extends State<Registar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amberAccent,
-        title: Text("Login"),
+        title: Text("Registar"),
         centerTitle: true,
       ),
       body: ListView(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-              top: 64.0,
+              top: 54.0,
             ),
             child: Center(
-              child: Image.asset("imagens/logo_login.png", height: 120, width: 120,),
+              child: Image.asset("imagens/profile.png", height: 120, width: 120,),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 48.0,
-              left: 24.0,
-              right: 24.0
+                top: 36.0,
+                left: 24.0,
+                right: 24.0
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                labelText: "Nome",
+                hintText: "Nome",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 28.0,
+                left: 24.0,
+                right: 24.0
             ),
             child: TextField(
               decoration: InputDecoration(
@@ -56,13 +70,28 @@ class _LoginState extends State<Login> {
             ),
           ),
           Padding(
-              padding: const EdgeInsets.only(
-                top: 36.0,
-                left: 64.0,
-                right: 64.0,
+            padding: const EdgeInsets.only(
+                top: 28.0,
+                left: 24.0,
+                right: 24.0
+            ),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: "Password",
+                hintText: "Password",
+                border: OutlineInputBorder(),
               ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 36.0,
+              left: 64.0,
+              right: 64.0,
+            ),
             child: RaisedButton(
-              child: Text("Login"),
+              child: Text("Registar"),
               color: Colors.amberAccent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
@@ -79,15 +108,15 @@ class _LoginState extends State<Login> {
             ),
             child: FlatButton(
               onPressed: () {
-                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Registar()));
-                },
+                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Login()));
+              },
               highlightColor: Colors.amberAccent,
               //quando se clica cor amarelo
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                   side: BorderSide(color: Colors.white60)
               ),
-              child: Text("Registar"),
+              child: Text("Login"),
             ),
           )
         ],
