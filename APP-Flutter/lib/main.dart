@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_escola/Pages/login.dart';
+import 'Pages/splash.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Login',
-      home: Login(),
+      home: Splash(),
     );
   }
 }
