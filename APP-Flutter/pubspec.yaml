@@ -22,7 +22,9 @@ environment:
 
 dependencies:
   socket_io_client: ^0.9.10
+  shared_preferences: ^0.5.8
   flare_splash_screen: ^3.0.1
+  rflutter_alert: ^1.0.3
   email_validator: ^1.0.5
   string_validator: ^0.1.4
   flutter:

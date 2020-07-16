@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:projeto_escola/Pages/login.dart';
+import 'package:projeto_escola/Pages/registar.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -10,30 +12,72 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-
+  Future<SharedPreferences> _token = SharedPreferences.getInstance();
   bool _loading = true;
+  bool _tokenE = false;
+  bool _first = true;
 
   IO.Socket socket = IO.io('http://157.245.44.14:8000', <String, dynamic>{
     'transports': ['websocket']
   });
 
-  connectionV() async{
-    socket.on("Conectado", (data) {
+  Future<void> _tokenF() async {
+    final SharedPreferences token = await _token;
+    String _tokenSt = token.getString('token');
+    if(token.getString('token') == null){
       setState(() {
+        _tokenE = false;
         _loading = false;
       });
+    }
+    else{
+      socket.emit("TokenV", (_tokenSt));
+
+      socket.on("TokenVerificado", (_) {
+        setState(() {
+          _tokenE = true;
+          _loading = false;
+        });
+        socket.off("TokenVerificado");
+        socket.off("TokenErro");
+      });
+      socket.on("TokenErro", (_) {
+        setState(() {
+          _tokenE = false;
+          _loading = false;
+        });
+        socket.off("TokenVerificado");
+        socket.off("TokenErro");
+      });
+    }
+
+  }
+
+  connectionV() async{
+    socket.on("Conectado", (data) {
+      _tokenF();
       socket.off("Conectado");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    connectionV();
+    if(_first){
+      _first = true;
+      connectionV();
+    }
     return Scaffold(
       body: Center(
         child: SplashScreen.navigate(
           name: 'imagens/school.flr',
-          next: (_) => Login(socket: socket,),
+          next: (_) {
+            if(!_tokenE){
+              return Login(socket: socket,);
+            }
+            else{
+              return Registar(socket: socket,); //Enviar para a dashboard
+            }
+          },
           isLoading: _loading,
           loopAnimation: 'Untitled',
           startAnimation: 'Untitled',
