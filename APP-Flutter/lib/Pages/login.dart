@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:projeto_escola/Pages/recuperar_password.dart';
 import 'package:projeto_escola/Pages/registar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:projeto_escola/funcoes/crypt.dart';
@@ -154,7 +155,10 @@ class _LoginState extends State<Login> {
                                     "Criar",
                                     style: TextStyle(color: Colors.white, fontSize: 20),
                                   ),
-                                  onPressed: () => Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Registar(socket: widget.socket,))),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Registar(socket: widget.socket,)));
+                                    },
                                   color: Color.fromRGBO(0, 179, 134, 1.0),
                                 ),
                                 DialogButton(
@@ -199,7 +203,11 @@ class _LoginState extends State<Login> {
                                     "Recuperar",
                                     style: TextStyle(color: Colors.white, fontSize: 20),
                                   ),
-                                  onPressed: () => Navigator.pop(context), //Ir para página para recuperar a password, quando for criada.
+                                  onPressed: () {
+                                    widget.socket.emit("ResetPass", (_email.text));
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => RecuperarPass(email: _email.text, socket: widget.socket,)));
+                                  }, //Ir para página para recuperar a password, quando for criada.
                                   color: Color.fromRGBO(0, 179, 134, 1.0),
                                 ),
                                 DialogButton(

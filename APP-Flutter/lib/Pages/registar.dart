@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_escola/Pages/login.dart';
+import 'package:projeto_escola/Pages/recuperar_password.dart';
 import 'package:projeto_escola/funcoes/crypt.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:email_validator/email_validator.dart';
@@ -235,7 +236,11 @@ class _RegistarState extends State<Registar> {
                                         "Recuperar",
                                         style: TextStyle(color: Colors.white, fontSize: 20),
                                       ),
-                                      onPressed: () => Navigator.pop(context), //Ir para página para recuperar a password, quando for criada.
+                                      onPressed: () {
+                                        widget.socket.emit("ResetPass", (_email.text));
+                                        Navigator.pop(context);
+                                        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => RecuperarPass(email: _email.text, socket: widget.socket,)));
+                                      }, //Ir para página para recuperar a password, quando for criada.
                                       color: Color.fromRGBO(0, 179, 134, 1.0),
                                     ),
                                     DialogButton(

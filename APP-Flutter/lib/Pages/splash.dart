@@ -42,6 +42,7 @@ class _SplashState extends State<Splash> {
         socket.off("TokenErro");
       });
       socket.on("TokenErro", (_) {
+        token.remove("token");
         setState(() {
           _tokenE = false;
           _loading = false;
