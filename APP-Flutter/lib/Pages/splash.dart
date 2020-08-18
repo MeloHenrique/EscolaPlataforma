@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
+import 'package:projeto_escola/Pages/dashboard.dart';
 import 'package:projeto_escola/Pages/login.dart';
-import 'package:projeto_escola/Pages/registar.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,14 +16,14 @@ class _SplashState extends State<Splash> {
   bool _loading = true;
   bool _tokenE = false;
   bool _first = true;
+  String tokenSt;
 
   IO.Socket socket = IO.io('http://157.245.44.14:8000', <String, dynamic>{
     'transports': ['websocket']
   });
-
   Future<void> _tokenF() async {
     final SharedPreferences token = await _token;
-    String _tokenSt = token.getString('token');
+    tokenSt = token.getString('token');
     if(token.getString('token') == null){
       setState(() {
         _tokenE = false;
@@ -31,7 +31,7 @@ class _SplashState extends State<Splash> {
       });
     }
     else{
-      socket.emit("TokenV", (_tokenSt));
+      socket.emit("TokenV", (tokenSt));
 
       socket.on("TokenVerificado", (_) {
         setState(() {
@@ -64,7 +64,8 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     if(_first){
-      _first = true;
+      _first = false;
+      print(socket.connected);
       connectionV();
     }
     return Scaffold(
@@ -76,7 +77,7 @@ class _SplashState extends State<Splash> {
               return Login(socket: socket,);
             }
             else{
-              return Registar(socket: socket,); //Enviar para a dashboard
+              return Dashboard(socket: socket, token: tokenSt,);
             }
           },
           isLoading: _loading,

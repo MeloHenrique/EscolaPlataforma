@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:projeto_escola/Pages/dashboard.dart';
 import 'package:projeto_escola/Pages/login.dart';
 import 'package:projeto_escola/Pages/recuperar_password.dart';
 import 'package:projeto_escola/funcoes/crypt.dart';
@@ -203,7 +204,9 @@ class _RegistarState extends State<Registar> {
                                 final snackBar = SnackBar(content: Text('A sua conta foi registada!'), backgroundColor: Colors.greenAccent, duration: Duration(seconds: 3),);
                                 _tokenSet(token);
                                 Scaffold.of(context).showSnackBar(snackBar);
-                                //Redirecionar para a dashboard quando acabar
+                                Future.delayed(const Duration(seconds: 3), () {
+                                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Dashboard(socket: widget.socket, token: token,)));
+                                });
                               });
                               widget.socket.on("RegistarExiste", (vazio) {
 

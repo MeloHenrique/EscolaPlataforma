@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'Pages/splash.dart';
+import 'package:flutter/services.dart';
 
-void main() {
+void main() async{
   runApp(MyApp());
 }
 

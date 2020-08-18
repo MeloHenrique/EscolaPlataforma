@@ -78,6 +78,8 @@ class _RecuperarPassState extends State<RecuperarPass> {
               alignment: Alignment.center,
               height: 200.0,
               width: 300.0,
+              onError: (error, stacktrace) {  },
+              onSuccess: (data) {  },
             ),
 
             Countdown(
