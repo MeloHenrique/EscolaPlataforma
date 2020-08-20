@@ -65,7 +65,6 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     if(_first){
       _first = false;
-      print(socket.connected);
       connectionV();
     }
     return Scaffold(

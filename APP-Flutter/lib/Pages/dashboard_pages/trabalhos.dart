@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:projeto_escola/Pages/dashboard_pages/add_trabalho.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TrabalhosGeral extends StatefulWidget {
@@ -15,8 +16,11 @@ class TrabalhosGeral extends StatefulWidget {
 class _TrabalhosState extends State<TrabalhosGeral> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: true);
+  RefreshController _refreshControllerTrabalhos = RefreshController(initialRefresh: true);
   List _turmas = [];
-
+  List _trabalhos = [];
+  int _i; // Controla que turma foi clicada globalmente
+  bool _condition = true;
 
   void _getTurmasTrabalhos() async{
     widget.socket.emit('GetTurmasTrabalhos', (widget.token));
@@ -30,9 +34,23 @@ class _TrabalhosState extends State<TrabalhosGeral> {
     });
   }
 
+  void _getTrabalhos() async{
+    widget.socket.emit('GetTrabalhos', ([widget.token, _turmas[_i]['nomeTurma']]));
+
+    widget.socket.on('TrabalhosGet', (trabalhosG){
+      _trabalhos.clear();
+      setState(() {
+        _trabalhos = trabalhosG;
+      });
+      _refreshControllerTrabalhos.refreshCompleted();
+      widget.socket.off('TrabalhosGet');
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _condition ? Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text("Trabalhos"),
@@ -71,10 +89,14 @@ class _TrabalhosState extends State<TrabalhosGeral> {
                             "Disciplina: ${_turmas[index]['disciplina']} "),
                       ),
                       onTap: () {
-                        print("Tap $index");
-                        // vai para uma nova página, onde mostra uma lista com os trabalhos,
-                        // utilizar uma variável para mostrar as turmas quando é verdadeira
-                        // e mostrar os trabalhos quando é falsa
+                        setState(() {
+                          _i = index;
+                          _condition = false;
+                        });
+                        _getTrabalhos(); // Ao mudar de widget a função não
+                        // executa como deveria através do widget de refresh
+                        // por isso chamamos a função aqui para os trabalhos
+                        // serem carregados
                       },
                     ),
                   ],
@@ -84,6 +106,37 @@ class _TrabalhosState extends State<TrabalhosGeral> {
           }
         ),
       ),
+    ) : Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          tooltip: 'Voltar',
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            setState(() {
+              _condition = true;
+            });
+          },
+        ),
+        centerTitle: true,
+        title: Text("Trabalhos"),
+        backgroundColor: Colors.amberAccent,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, CupertinoPageRoute(builder: (context) => AddTrabalho(socket: widget.socket, token: widget.token, turma: _turmas[_i]['nomeTurma'],)));
+        },
+        tooltip: "Adicionar Trabalho",
+        child: Icon(Icons.add, color: Colors.black,),
+        backgroundColor: Colors.amberAccent,
+      ),
+      body:SmartRefresher(
+        controller: _refreshControllerTrabalhos,
+        enablePullDown: true,
+        header: WaterDropHeader(),
+        onRefresh: _getTrabalhos,
+        child: Container(),
+      ),
     );
   }
 }
+

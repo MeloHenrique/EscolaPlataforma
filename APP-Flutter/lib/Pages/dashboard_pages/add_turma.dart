@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../dashboard.dart';
-
 class AddTurma extends StatefulWidget {
   final socket;
   final token;

@@ -71,6 +71,7 @@ class _TurmasPaginaState extends State<TurmasPagina> {
                      ListTile(
                       leading: Icon(Icons.supervisor_account),
                       title: Text(_turmas[index]['nomeTurma']),
+                      trailing: Icon(Icons.arrow_forward_ios),
                       subtitle: Padding(
                         padding: const EdgeInsets.only(
                           top: 6.0,
