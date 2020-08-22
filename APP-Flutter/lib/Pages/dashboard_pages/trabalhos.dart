@@ -114,6 +114,7 @@ class _TrabalhosState extends State<TrabalhosGeral> {
           onPressed: () {
             setState(() {
               _condition = true;
+              _refreshController.requestRefresh();
             });
           },
         ),
@@ -123,7 +124,9 @@ class _TrabalhosState extends State<TrabalhosGeral> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (context) => AddTrabalho(socket: widget.socket, token: widget.token, turma: _turmas[_i]['nomeTurma'],)));
+          Navigator.push(context, CupertinoPageRoute(builder: (context) => AddTrabalho(socket: widget.socket, token: widget.token, turma: _turmas[_i]['id'],))).then((value) => setState(() {
+            _refreshControllerTrabalhos.requestRefresh();
+          }));
         },
         tooltip: "Adicionar Trabalho",
         child: Icon(Icons.add, color: Colors.black,),

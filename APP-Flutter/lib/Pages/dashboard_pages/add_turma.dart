@@ -139,10 +139,13 @@ class _AddTurmaState extends State<AddTurma> {
                               if(criada){
                                 final snackBar = SnackBar(content: Text('Turma Criada!'), backgroundColor: Colors.greenAccent, duration: Duration(seconds: 3),);
                                 Scaffold.of(context).showSnackBar(snackBar);
+                                Future.delayed(const Duration(seconds: 1), () {
+                                  Navigator.pop(context);
+                                });
                               }
                               else{
-                              final snackBar = SnackBar(content: Text('A sua conta já tem uma turma com esse nome!'), backgroundColor: Colors.redAccent, duration: Duration(seconds: 3),);
-                              Scaffold.of(context).showSnackBar(snackBar);
+                                final snackBar = SnackBar(content: Text('Ocorreu um problema!'), backgroundColor: Colors.redAccent, duration: Duration(seconds: 3),);
+                                Scaffold.of(context).showSnackBar(snackBar);
                               }
                               widget.socket.off('TurmaCriada');
                             });

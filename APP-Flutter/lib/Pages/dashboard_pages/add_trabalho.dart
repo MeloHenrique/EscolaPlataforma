@@ -19,7 +19,21 @@ class _AddTrabalhoState extends State<AddTrabalho> {
 
   TextEditingController _nomeTrabalho = TextEditingController();
   TextEditingController _descricaoTrabalho = TextEditingController();
+  DateTime selectedDate = DateTime.now();
   int _nivelTrabalho = 1;
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(DateTime.now().year + 1),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +107,38 @@ class _AddTrabalhoState extends State<AddTrabalho> {
                   ),
 
                   Padding(
+                    padding: EdgeInsets.only(
+                      top: 35.0,
+                      left: 32.0,
+                      right: 32.0,
+                    ),
+                    child: Row(
+                      children: [
+                        RaisedButton(
+                          onPressed: () => _selectDate(context), // Refer step 3
+                          child: Text(
+                            'Mudar data do trabalho',
+                          ),
+                          color: Colors.amberAccent.withOpacity(0.85),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.white)
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: 20.0,
+                        ),
+
+                        Text(
+                          "${selectedDate.toLocal()}".split(' ')[0],
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Padding(
                     padding: const EdgeInsets.only(
                       top: 35.0,
                       right: 32.0,
@@ -144,12 +190,27 @@ class _AddTrabalhoState extends State<AddTrabalho> {
                       ),
                       onPressed: () {
                         if(_formKey.currentState.validate()){
-                          // Enviar Token
+                          widget.socket.emit('AddTrabalho', ([widget.token, widget.turma, _nomeTrabalho.text, _descricaoTrabalho.text, selectedDate.toString(), _nivelTrabalho]));
+
+                          widget.socket.on('TrabalhoCriado', (_){
+                            if(_){
+                              final snackBar = SnackBar(content: Text('Trabalho Criado!'), backgroundColor: Colors.greenAccent, duration: Duration(seconds: 3),);
+                              Scaffold.of(context).showSnackBar(snackBar);
+                              Future.delayed(const Duration(seconds: 1), () {
+                                Navigator.pop(context);
+                              });
+                            }
+                            else{
+                              final snackBar = SnackBar(content: Text('Ocorreu um problema!'), backgroundColor: Colors.redAccent, duration: Duration(seconds: 3),);
+                              Scaffold.of(context).showSnackBar(snackBar);
+                            }
+                            widget.socket.off('TrabalhoCriado');
+                          });
+
                         }
                       },
                     ),
                   ),
-
                 ],
               ),
             ),

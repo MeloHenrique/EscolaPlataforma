@@ -42,7 +42,9 @@ class _TurmasPaginaState extends State<TurmasPagina> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (context) => AddTurma(socket: widget.socket, token: widget.token,)));
+          Navigator.push(context, CupertinoPageRoute(builder: (context) => AddTurma(socket: widget.socket, token: widget.token,))).then((value) => setState(() {
+            _refreshController.requestRefresh();
+          }));
         },
         tooltip: "Adicionar Turma",
         child: Icon(Icons.add, color: Colors.black,),
