@@ -35,10 +35,11 @@ class _TrabalhosState extends State<TrabalhosGeral> {
   }
 
   void _getTrabalhos() async{
-    widget.socket.emit('GetTrabalhos', ([widget.token, _turmas[_i]['nomeTurma']]));
+    widget.socket.emit('GetTrabalhos', ([widget.token, _turmas[_i]['id']]));
 
     widget.socket.on('TrabalhosGet', (trabalhosG){
       _trabalhos.clear();
+      print(trabalhosG);
       setState(() {
         _trabalhos = trabalhosG;
       });
@@ -137,7 +138,34 @@ class _TrabalhosState extends State<TrabalhosGeral> {
         enablePullDown: true,
         header: WaterDropHeader(),
         onRefresh: _getTrabalhos,
-        child: Container(),
+        child: ListView.builder(
+          itemCount: _trabalhos.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(
+                top: 4.0,
+                bottom: 4.0,
+              ),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: ListTile(
+                  leading: Icon(Icons.book),
+                  title: Text(_trabalhos[index]['nomeTrabalho']),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 6.0,
+                      bottom: 3.0,
+                    ),
+                    child: Text("Descrição: ${_trabalhos[index]['descricaoTurma']}\n"
+                        "Nível: ${_trabalhos[index]['nivelTrabalho']}"),
+                  ),
+                ) ,
+              ),
+            );
+          },
+        ),
       ),
     );
   }
