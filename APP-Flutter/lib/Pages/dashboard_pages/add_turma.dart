@@ -7,13 +7,11 @@ class AddTurma extends StatefulWidget {
 
   const AddTurma({Key key, this.socket, this.token}) : super(key: key);
 
-
   @override
   _AddTurmaState createState() => _AddTurmaState();
 }
 
 class _AddTurmaState extends State<AddTurma> {
-
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _nomeTurma = TextEditingController();
@@ -42,7 +40,6 @@ class _AddTurmaState extends State<AddTurma> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-
                   Padding(
                     padding: EdgeInsets.only(
                       top: 32.0,
@@ -51,19 +48,14 @@ class _AddTurmaState extends State<AddTurma> {
                       child: Image.asset("imagens/teaching.png"),
                     ),
                   ),
-
                   Padding(
-                    padding: EdgeInsets.only(
-                      top: 28.0,
-                      left: 32.0,
-                      right: 32.0
-                    ),
+                    padding:
+                        EdgeInsets.only(top: 28.0, left: 32.0, right: 32.0),
                     child: TextFormField(
-                      validator: (texto){
-                        if(texto.length <= 3){
+                      validator: (texto) {
+                        if (texto.length <= 3) {
                           return "O nome da turma é demasiado curto";
-                        }
-                        else{
+                        } else {
                           return null;
                         }
                       },
@@ -76,20 +68,15 @@ class _AddTurmaState extends State<AddTurma> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                      top: 18.0,
-                      left: 32.0,
-                      right: 32.0
-                    ),
+                    padding:
+                        EdgeInsets.only(top: 18.0, left: 32.0, right: 32.0),
                     child: TextFormField(
-                      validator: (texto){
-                        if(texto.length <= 0){
+                      validator: (texto) {
+                        if (texto.length <= 0) {
                           return "É necessário preencher este campo.";
-                        }
-                        else if(!isNumeric(texto)){
+                        } else if (!isNumeric(texto)) {
                           return "Alguma coisa não está bem";
-                        }
-                        else{
+                        } else {
                           return null;
                         }
                       },
@@ -103,17 +90,13 @@ class _AddTurmaState extends State<AddTurma> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        top: 18.0,
-                        left: 32.0,
-                        right: 32.0
-                    ),
+                    padding:
+                        EdgeInsets.only(top: 18.0, left: 32.0, right: 32.0),
                     child: TextFormField(
-                      validator: (texto){
-                        if(texto.length <= 3){
+                      validator: (texto) {
+                        if (texto.length <= 3) {
                           return "O nome da disciplina é demasiado curto";
-                        }
-                        else{
+                        } else {
                           return null;
                         }
                       },
@@ -132,32 +115,44 @@ class _AddTurmaState extends State<AddTurma> {
                     child: Center(
                       child: RaisedButton(
                         onPressed: () {
-                          if(_formKey.currentState.validate()){
-                            widget.socket.emit("AddTurma", ([widget.token, _nomeTurma.text, _numeroAlunos.text, _nomeDisciplina.text]));
+                          if (_formKey.currentState.validate()) {
+                            widget.socket.emit(
+                                "AddTurma",
+                                ([
+                                  widget.token,
+                                  _nomeTurma.text,
+                                  _numeroAlunos.text,
+                                  _nomeDisciplina.text
+                                ]));
 
                             widget.socket.on("TurmaCriada", (criada) {
-                              if(criada){
-                                final snackBar = SnackBar(content: Text('Turma Criada!'), backgroundColor: Colors.greenAccent, duration: Duration(seconds: 3),);
+                              if (criada) {
+                                final snackBar = SnackBar(
+                                  content: Text('Turma Criada!'),
+                                  backgroundColor: Colors.greenAccent,
+                                  duration: Duration(seconds: 3),
+                                );
                                 Scaffold.of(context).showSnackBar(snackBar);
                                 Future.delayed(const Duration(seconds: 1), () {
                                   Navigator.pop(context);
                                 });
-                              }
-                              else{
-                                final snackBar = SnackBar(content: Text('Ocorreu um problema!'), backgroundColor: Colors.redAccent, duration: Duration(seconds: 3),);
+                              } else {
+                                final snackBar = SnackBar(
+                                  content: Text('Ocorreu um problema!'),
+                                  backgroundColor: Colors.redAccent,
+                                  duration: Duration(seconds: 3),
+                                );
                                 Scaffold.of(context).showSnackBar(snackBar);
                               }
                               widget.socket.off('TurmaCriada');
                             });
-
                           }
                         },
                         child: Text("Adicionar Turma"),
                         color: Colors.amberAccent,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.white)
-                        ),
+                            side: BorderSide(color: Colors.white)),
                       ),
                     ),
                   )

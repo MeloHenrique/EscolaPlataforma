@@ -19,8 +19,9 @@ class _TrabalhosState extends State<TrabalhosGeral> {
   RefreshController _refreshControllerTrabalhos = RefreshController(initialRefresh: true);
   List _turmas = [];
   List _trabalhos = [];
-  int _i; // Controla que turma foi clicada globalmente
-  bool _condition = true;
+  int _i; // Controla que turma foi clicada globalmente (possível remover mais tarde)
+  bool _condition = true; // possível alterar e criar um indexedStack
+  bool _edit = false;
 
   void _getTurmasTrabalhos() async{
     widget.socket.emit('GetTurmasTrabalhos', (widget.token));
@@ -109,12 +110,38 @@ class _TrabalhosState extends State<TrabalhosGeral> {
       ),
     ) : Scaffold(
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(
+              right: 4.5,
+            ),
+            child: Container(
+              child: InkWell(
+                child: _edit ? Icon(Icons.close) : Icon(Icons.edit),
+                onTap: () {
+                  if(_edit){
+                    setState(() {
+                      _edit = false;
+                    });
+                  }
+                  else{
+                    setState(() {
+                      _edit = true;
+                    });
+                  }
+                },
+              )
+            ),
+          )
+        ],
         leading: IconButton(
           tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             setState(() {
+              _trabalhos = [];
               _condition = true;
+              _edit = false;
               _refreshController.requestRefresh();
             });
           },
@@ -151,6 +178,7 @@ class _TrabalhosState extends State<TrabalhosGeral> {
                   borderRadius: BorderRadius.circular(15.0),
                 ),
                 child: ListTile(
+                  trailing: _edit ? Icon(Icons.arrow_forward_ios): null,
                   leading: Icon(Icons.book),
                   title: Text(_trabalhos[index]['nomeTrabalho']),
                   subtitle: Padding(
@@ -161,6 +189,11 @@ class _TrabalhosState extends State<TrabalhosGeral> {
                     child: Text("Descrição: ${_trabalhos[index]['descricaoTurma']}\n"
                         "Nível: ${_trabalhos[index]['nivelTrabalho']}"),
                   ),
+                  onTap: _edit ? () {
+                    // Se estiver no modo de edição vai para a página para
+                    // editar o trabalho, é necessário enviar o _id do trabalho
+                    // em que clicou
+                  }: null,
                 ) ,
               ),
             );
