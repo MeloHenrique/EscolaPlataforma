@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:projeto_escola/Pages/dashboard_pages/trabalhos_stack/trabalhos_dash.dart';
 import 'package:projeto_escola/Pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dashboard_pages/trabalhos.dart';
 import 'dashboard_pages/turmas.dart';
 
 class Dashboard extends StatefulWidget {
@@ -50,7 +50,7 @@ class _DashboardState extends State<Dashboard> {
     if(_first){
       _first = false;
       _paginas = [
-        TrabalhosGeral(socket: widget.socket, token: widget.token,),
+        TrabalhosDash(socket: widget.socket, token: widget.token,),
         TurmasPagina(socket: widget.socket, token: widget.token,),
         TurmasPagina(socket: widget.socket, token: widget.token,)
       ];
