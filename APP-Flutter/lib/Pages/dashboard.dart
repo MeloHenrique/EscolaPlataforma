@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:projeto_escola/Pages/dashboard_pages/trabalhos_stack/trabalhos_dash.dart';
+import 'package:projeto_escola/Pages/dashboard_pages/dash_trabalhos/trabalhos_dash.dart';
 import 'package:projeto_escola/Pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_pages/turmas.dart';

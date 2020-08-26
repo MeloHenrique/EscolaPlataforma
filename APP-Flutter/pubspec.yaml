@@ -30,6 +30,7 @@ dependencies:
   timer_count_down: ^1.0.4+1
   time_machine: ^0.9.13
   flutter_score_slider: ^1.0.1
+  circular_check_box: ^1.0.2
   curved_navigation_bar: ^0.3.3
   flare_splash_screen: ^3.0.1
   rflutter_alert: ^1.0.3
