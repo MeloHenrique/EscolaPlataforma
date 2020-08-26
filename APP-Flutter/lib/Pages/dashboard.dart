@@ -4,7 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:projeto_escola/Pages/dashboard_pages/dash_trabalhos/trabalhos_dash.dart';
 import 'package:projeto_escola/Pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dashboard_pages/turmas.dart';
+import 'dashboard_pages/dash_turmas/turmas.dart';
 
 class Dashboard extends StatefulWidget {
   final socket;

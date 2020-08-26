@@ -218,6 +218,22 @@ class _EditTrabalhoState extends State<EditTrabalho> {
                           }
                           if(editTrabalho.length > 0){
                             widget.socket.emit('EditarTrabalho', ([widget.token, widget.idTrabalho, editTrabalho]));
+
+                            widget.socket.on('TrabalhoEditar', (_){
+                              if(_){
+                                final snackBar = SnackBar(content: Text('Trabalho Editado!'), backgroundColor: Colors.greenAccent, duration: Duration(seconds: 1),);
+                                Scaffold.of(context).showSnackBar(snackBar);
+                                Future.delayed(const Duration(seconds: 1), () {
+                                  Navigator.pop(context);
+                                });
+                              }
+                              else{
+                                final snackBar = SnackBar(content: Text('Ocorreu um erro!'), backgroundColor: Colors.redAccent, duration: Duration(seconds: 2),);
+                                Scaffold.of(context).showSnackBar(snackBar);
+                              }
+                              widget.socket.off('TrabalhoEditar');
+                            });
+
                             editTrabalho.clear();
                           }
                           else{
