@@ -27,6 +27,8 @@ dependencies:
   shared_preferences: ^0.5.8
   pin_code_fields: ^4.0.0
   flare_loading: ^2.1.1
+  fl_chart: ^0.11.0
+  jiffy: ^3.0.1
   timer_count_down: ^1.0.4+1
   sliding_up_panel: ^1.0.2
   time_machine: ^0.9.13

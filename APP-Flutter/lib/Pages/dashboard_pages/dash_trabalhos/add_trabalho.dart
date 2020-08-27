@@ -190,7 +190,7 @@ class _AddTrabalhoState extends State<AddTrabalho> {
                       ),
                       onPressed: () {
                         if(_formKey.currentState.validate()){
-                          widget.socket.emit('AddTrabalho', ([widget.token, widget.turma, _nomeTrabalho.text, _descricaoTrabalho.text, selectedDate.toString(), _nivelTrabalho]));
+                          widget.socket.emit('AddTrabalho', ([widget.token, widget.turma, _nomeTrabalho.text, _descricaoTrabalho.text, "${selectedDate.toLocal()}".split(' ')[0], _nivelTrabalho]));
 
                           widget.socket.on('TrabalhoCriado', (_){
                             if(_){

@@ -31,7 +31,6 @@ class _TurmasPaginaState extends State<TurmasPagina> {
       _refreshController.refreshCompleted();
       widget.socket.off('turmasGet');
     });
-
   }
 
   @override
