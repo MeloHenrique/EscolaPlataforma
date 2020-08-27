@@ -28,6 +28,7 @@ dependencies:
   pin_code_fields: ^4.0.0
   flare_loading: ^2.1.1
   timer_count_down: ^1.0.4+1
+  sliding_up_panel: ^1.0.2
   time_machine: ^0.9.13
   flutter_score_slider: ^1.0.1
   circular_check_box: ^1.0.2
@@ -69,6 +70,7 @@ flutter:
     - imagens/report128.png
     - packages/time_machine/data/cultures/cultures.bin
     - packages/time_machine/data/tzdb/tzdb.bin
+    - imagens/line.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

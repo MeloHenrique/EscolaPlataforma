@@ -20,7 +20,6 @@ class _TrabalhosDashState extends State<TrabalhosDash> {
   bool _first = true;
 
   nextIndex(turmaValor){
-    print(turmaValor);
     setState(() {
       turma = turmaValor;
       _paginas = [

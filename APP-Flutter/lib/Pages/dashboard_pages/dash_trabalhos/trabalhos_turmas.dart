@@ -37,7 +37,7 @@ class _TrabalhosTurmasState extends State<TrabalhosTurmas> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("Trabalhos"),
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
       ),
       body: SmartRefresher(
         controller: _refreshController,

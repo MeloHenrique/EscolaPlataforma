@@ -62,7 +62,7 @@ class _RecuperarPassState extends State<RecuperarPass> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
         title: Text("Recuperar Password"),
         centerTitle: true,
       ),
@@ -221,8 +221,8 @@ class _RecuperarPassState extends State<RecuperarPass> {
                     right: 32.0,
                   ),
                   child: RaisedButton(
-                    child: Text("Reenviar"),
-                    color: Colors.amberAccent,
+                    child: Text("Reenviar", style: TextStyle(color: Colors.black54),),
+                    color: Colors.tealAccent,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.white)
@@ -304,8 +304,8 @@ class _RecuperarPassState extends State<RecuperarPass> {
                           right: 32.0,
                         ),
                         child: RaisedButton(
-                          child: Text("Repor Password"),
-                          color: Colors.amberAccent,
+                          child: Text("Repor Password", style: TextStyle(color: Colors.black54),),
+                          color: Colors.tealAccent,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(color: Colors.white)

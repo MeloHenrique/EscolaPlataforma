@@ -30,7 +30,7 @@ class _EditTrabalhoState extends State<EditTrabalho> {
       appBar: AppBar(
         title: Text("Editar Trabalho"),
         centerTitle: true,
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
       ),
       body: Builder(
         builder: (context) => ListView(
@@ -173,7 +173,7 @@ class _EditTrabalhoState extends State<EditTrabalho> {
                                     child: ScoreSlider(
                                       thumbColor: Colors.white,
                                       scoreDotColor: Colors.white,
-                                      backgroundColor: Colors.amberAccent.withOpacity(0.70),
+                                      backgroundColor: Colors.tealAccent.withOpacity(0.70),
                                       score: _nivelTrabalho,
                                       minScore: 1,
                                       maxScore: 5,
@@ -198,8 +198,8 @@ class _EditTrabalhoState extends State<EditTrabalho> {
                       top: 35,
                     ),
                     child: RaisedButton(
-                      child: Text("Editar Trabalho"),
-                      color: Colors.amberAccent,
+                      child: Text("Editar Trabalho", style: TextStyle(color: Colors.black54),),
+                      color: Colors.tealAccent,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                           side: BorderSide(color: Colors.white)

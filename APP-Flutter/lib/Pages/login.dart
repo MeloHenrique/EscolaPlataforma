@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
         title: Text("Login"),
         centerTitle: true,
       ),
@@ -110,8 +110,8 @@ class _LoginState extends State<Login> {
                     child: ButtonTheme(
                       minWidth: 160.0,
                       child: RaisedButton(
-                        child: Text("Login"),
-                        color: Colors.amberAccent,
+                        child: Text("Login", style: TextStyle(color: Colors.black54),),
+                        color: Colors.tealAccent,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: Colors.white)

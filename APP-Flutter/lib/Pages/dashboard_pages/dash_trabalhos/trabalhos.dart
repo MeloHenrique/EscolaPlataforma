@@ -26,7 +26,6 @@ class _TrabalhosState extends State<Trabalhos> {
     widget.socket.emit('GetTrabalhos', ([widget.token, widget.turma]));
     widget.socket.on('TrabalhosGet', (trabalhosG){
       _trabalhos.clear();
-      print(trabalhosG);
       setState(() {
         _trabalhos = trabalhosG;
       });
@@ -72,7 +71,7 @@ class _TrabalhosState extends State<Trabalhos> {
         ),
         centerTitle: true,
         title: Text("Trabalhos"),
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -82,7 +81,7 @@ class _TrabalhosState extends State<Trabalhos> {
         },
         tooltip: "Adicionar Trabalho",
         child: Icon(Icons.add, color: Colors.black,),
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
       ),
       body:SmartRefresher(
         controller: _refreshControllerTrabalhos,

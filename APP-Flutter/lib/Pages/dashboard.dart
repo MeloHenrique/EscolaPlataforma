@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:projeto_escola/Pages/dashboard_pages/dash_trabalhos/trabalhos_dash.dart';
+import 'package:projeto_escola/Pages/dashboard_pages/dash_turmas/turmas.dart';
 import 'package:projeto_escola/Pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dashboard_pages/dash_turmas/turmas.dart';
 
 class Dashboard extends StatefulWidget {
   final socket;
@@ -52,7 +52,7 @@ class _DashboardState extends State<Dashboard> {
       _paginas = [
         TrabalhosDash(socket: widget.socket, token: widget.token,),
         TurmasPagina(socket: widget.socket, token: widget.token,),
-        TurmasPagina(socket: widget.socket, token: widget.token,)
+        TurmasPagina(socket: widget.socket, token: widget.token,),
       ];
       verificarToken();
     }
@@ -62,12 +62,12 @@ class _DashboardState extends State<Dashboard> {
         index: 1,
         height: 55.0,
         items: <Widget>[
-          Icon(Icons.class_, size: 30),
-          Icon(Icons.list, size: 30),
-          Icon(Icons.perm_identity, size: 30),
+          Icon(Icons.class_, size: 30, color: Colors.black,),
+          Icon(Icons.list, size: 30, color: Colors.black,),
+          Icon(Icons.perm_identity, size: 30, color: Colors.black,),
         ],
-        color: Colors.amberAccent,
-        buttonBackgroundColor: Colors.amberAccent,
+        color: Colors.tealAccent,
+        buttonBackgroundColor: Colors.tealAccent,
         backgroundColor: Colors.transparent,
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 600),

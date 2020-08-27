@@ -41,7 +41,7 @@ class _RegistarState extends State<Registar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
         title: Text("Registar"),
         centerTitle: true,
       ),
@@ -186,8 +186,8 @@ class _RegistarState extends State<Registar> {
                       child: ButtonTheme(
                         minWidth: 160.0,
                         child: RaisedButton(
-                          child: Text("Registar"),
-                          color: Colors.amberAccent,
+                          child: Text("Registar", style: TextStyle(color: Colors.black54),),
+                          color: Colors.tealAccent,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(color: Colors.white)
@@ -273,7 +273,7 @@ class _RegistarState extends State<Registar> {
                           onPressed: () {
                             Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Login(socket: widget.socket,)));
                           },
-                          highlightColor: Colors.amberAccent,
+                          highlightColor: Colors.tealAccent,
                           //quando se clica cor amarelo
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),

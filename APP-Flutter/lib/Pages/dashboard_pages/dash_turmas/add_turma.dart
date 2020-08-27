@@ -31,7 +31,7 @@ class _AddTurmaState extends State<AddTurma> {
       appBar: AppBar(
         title: Text("Adicionar turma"),
         centerTitle: true,
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
       ),
       body: Builder(
         builder: (context) => ListView(
@@ -148,8 +148,8 @@ class _AddTurmaState extends State<AddTurma> {
                             });
                           }
                         },
-                        child: Text("Adicionar Turma"),
-                        color: Colors.amberAccent,
+                        child: Text("Adicionar Turma", style: TextStyle(color: Colors.black54),),
+                        color: Colors.tealAccent,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: Colors.white)),

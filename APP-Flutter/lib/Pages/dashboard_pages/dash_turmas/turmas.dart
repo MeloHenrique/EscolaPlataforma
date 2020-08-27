@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:projeto_escola/Pages/dashboard_pages/dash_turmas/turma_infos.dart';
 import 'file:///C:/Users/Henrique/Documents/projeto_escola/lib/Pages/dashboard_pages/dash_turmas/add_turma.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -7,7 +8,7 @@ class TurmasPagina extends StatefulWidget {
   final socket;
   final token;
 
-  const TurmasPagina({Key key, this.socket, this.token}) : super(key: key);
+  const TurmasPagina({Key key, this.socket, this.token,}) : super(key: key);
 
   @override
   _TurmasPaginaState createState() => _TurmasPaginaState();
@@ -17,6 +18,7 @@ class _TurmasPaginaState extends State<TurmasPagina> {
   RefreshController _refreshController = RefreshController(initialRefresh: true);
 
   List _turmas = [];
+  bool _edit = false;
 
   void _getTurmas() async{
     widget.socket.emit("GetTurmas", (widget.token));
@@ -38,7 +40,7 @@ class _TurmasPaginaState extends State<TurmasPagina> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("Turmas"),
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -48,7 +50,7 @@ class _TurmasPaginaState extends State<TurmasPagina> {
         },
         tooltip: "Adicionar Turma",
         child: Icon(Icons.add, color: Colors.black,),
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
       ),
       body: SmartRefresher(
         controller: _refreshController,
@@ -83,10 +85,14 @@ class _TurmasPaginaState extends State<TurmasPagina> {
                             "Disciplina: ${_turmas[index]['disciplina']} "),
                       ),
                       onTap: () {
-                        print("Tap $index"); // vai para uma nova página, onde mostra o gráfico
-                      },
-                      onLongPress: () {
-                        print("Long Press $index"); // vai para uma página onde pode editar a turma se o email for válido
+                        if(!_edit){
+                          Navigator.push(context, CupertinoPageRoute(builder: (context) => TurmaInfos(socket: widget.socket, token: widget.token, idTurma: _turmas[index]['id'],))).then((value) => setState(() {
+                            _refreshController.requestRefresh();
+                          }));
+                        }
+                        else{
+                          // _turmas[index]['id'] // Muda para a página de editar
+                        }
                       },
                     ),
                   ],

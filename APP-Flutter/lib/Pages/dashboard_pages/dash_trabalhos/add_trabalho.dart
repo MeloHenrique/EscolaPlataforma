@@ -41,7 +41,7 @@ class _AddTrabalhoState extends State<AddTrabalho> {
       appBar: AppBar(
         title: Text('Criar Trabalho'),
         centerTitle: true,
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.tealAccent,
       ),
       body: Builder(
         builder: (context) => ListView(
@@ -119,7 +119,7 @@ class _AddTrabalhoState extends State<AddTrabalho> {
                           child: Text(
                             'Mudar data do trabalho',
                           ),
-                          color: Colors.amberAccent.withOpacity(0.85),
+                          color: Colors.tealAccent.withOpacity(0.85),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(color: Colors.white)
@@ -161,7 +161,7 @@ class _AddTrabalhoState extends State<AddTrabalho> {
                             child: ScoreSlider(
                               thumbColor: Colors.white,
                               scoreDotColor: Colors.white,
-                              backgroundColor: Colors.amberAccent.withOpacity(0.70),
+                              backgroundColor: Colors.tealAccent.withOpacity(0.70),
                               score: 1,
                               minScore: 1,
                               maxScore: 5,
@@ -182,8 +182,8 @@ class _AddTrabalhoState extends State<AddTrabalho> {
                       top: 35,
                     ),
                     child: RaisedButton(
-                      child: Text("Criar Trabalho"),
-                      color: Colors.amberAccent,
+                      child: Text("Criar Trabalho", style: TextStyle(color: Colors.black54),),
+                      color: Colors.tealAccent,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                           side: BorderSide(color: Colors.white)
