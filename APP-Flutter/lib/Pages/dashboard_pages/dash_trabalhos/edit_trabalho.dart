@@ -2,13 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_score_slider/flutter_score_slider.dart';
 import 'package:circular_check_box/circular_check_box.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class EditTrabalho extends StatefulWidget {
   final socket;
   final token;
   final idTrabalho;
+  final turma;
 
-  const EditTrabalho({Key key, this.socket, this.token, this.idTrabalho}) : super(key: key);
+  const EditTrabalho({Key key, this.socket, this.token, this.idTrabalho, this.turma}) : super(key: key);
 
   @override
   _EditTrabalhoState createState() => _EditTrabalhoState();
@@ -241,6 +243,73 @@ class _EditTrabalhoState extends State<EditTrabalho> {
                             Scaffold.of(context).showSnackBar(snackBar);
                           }
                         }
+                      },
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 8.0,
+                    ),
+                    child: RaisedButton(
+                      child: Text("Eliminar Trabalho", style: TextStyle(color: Colors.black54),),
+                      color: Colors.redAccent,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.white)
+                      ),
+                      onPressed: (){
+
+                        var alertStyle = AlertStyle(
+                          animationType: AnimationType.fromTop,
+                          isCloseButton: false,
+                          isOverlayTapDismiss: true,
+                          descStyle: TextStyle(fontSize: 14.0),
+                          animationDuration: Duration(milliseconds: 400),
+                          alertBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0.0),
+                            side: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          titleStyle: TextStyle(
+                            color: Colors.redAccent,
+                          ),
+                        );
+
+                        Alert(
+                          context: context,
+                          style: alertStyle,
+                          type: AlertType.info,
+                          title: "Eliminar Trabalho",
+                          desc: "Está prestes a eliminar o trabalho.\n"
+                              "Não será possível recuperar o trabalho.",
+                          buttons: [
+                            DialogButton(
+                              child: Text("Cancelar"),
+                              color: Colors.black54,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            DialogButton(
+                              child: Text("Eliminar"),
+                              color: Colors.redAccent,
+                              onPressed: () {
+                                widget.socket.emit('DeleteTrabalho', ([widget.token, widget.idTrabalho, widget.turma]));
+
+                                widget.socket.on('TrabalhoDelete', (_){
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+
+                                  widget.socket.off('TrabalhoDelete');
+                                });
+
+                              },
+                            ),
+                          ],
+                        ).show();
+
                       },
                     ),
                   ),

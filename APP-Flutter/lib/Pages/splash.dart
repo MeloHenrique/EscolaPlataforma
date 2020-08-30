@@ -18,7 +18,7 @@ class _SplashState extends State<Splash> {
   bool _first = true;
   String tokenSt;
 
-  IO.Socket socket = IO.io('http://157.245.44.14:8000', <String, dynamic>{
+  IO.Socket socket = IO.io('https://plataforma-server.herokuapp.com/', <String, dynamic>{
     'transports': ['websocket']
   });
   Future<void> _tokenF() async {

@@ -83,47 +83,50 @@ class _TrabalhosState extends State<Trabalhos> {
         child: Icon(Icons.add, color: Colors.black,),
         backgroundColor: Colors.tealAccent,
       ),
-      body:SmartRefresher(
-        controller: _refreshControllerTrabalhos,
-        enablePullDown: true,
-        header: WaterDropHeader(),
-        onRefresh: _getTrabalhos,
-        child: ListView.builder(
-          itemCount: _trabalhos.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(
-                top: 4.0,
-                bottom: 4.0,
-              ),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+      body:WillPopScope(
+        onWillPop: () =>  widget.backTurmas(),
+        child: SmartRefresher(
+          controller: _refreshControllerTrabalhos,
+          enablePullDown: true,
+          header: WaterDropHeader(),
+          onRefresh: _getTrabalhos,
+          child: ListView.builder(
+            itemCount: _trabalhos.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(
+                  top: 4.0,
+                  bottom: 4.0,
                 ),
-                child: ListTile(
-                  trailing: _edit ? Icon(Icons.arrow_forward_ios): null,
-                  leading: Icon(Icons.book),
-                  title: Text(_trabalhos[index]['nomeTrabalho']),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 6.0,
-                      bottom: 3.0,
-                    ),
-                    child: Text("Descrição: ${_trabalhos[index]['descricaoTurma']}\n"
-                        "Nível: ${_trabalhos[index]['nivelTrabalho']}"),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
-                  onTap: _edit ? () {
-                    Navigator.push(context, CupertinoPageRoute(builder: (context) => EditTrabalho(socket: widget.socket, token: widget.token, idTrabalho: _trabalhos[index]['_id'],))).then((value) => setState(() {
-                      setState(() {
-                        _edit = false;
-                      });
-                      _refreshControllerTrabalhos.requestRefresh();
-                    }));
-                  }: null,
-                ) ,
-              ),
-            );
-          },
+                  child: ListTile(
+                    trailing: _edit ? Icon(Icons.arrow_forward_ios): null,
+                    leading: Icon(Icons.book),
+                    title: Text(_trabalhos[index]['nomeTrabalho']),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 6.0,
+                        bottom: 3.0,
+                      ),
+                      child: Text("Descrição: ${_trabalhos[index]['descricaoTurma']}\n"
+                          "Nível: ${_trabalhos[index]['nivelTrabalho']}"),
+                    ),
+                    onTap: _edit ? () {
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => EditTrabalho(socket: widget.socket, token: widget.token, idTrabalho: _trabalhos[index]['_id'], turma: widget.turma,))).then((value) => setState(() {
+                        setState(() {
+                          _edit = false;
+                        });
+                        _refreshControllerTrabalhos.requestRefresh();
+                      }));
+                    }: null,
+                  ) ,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

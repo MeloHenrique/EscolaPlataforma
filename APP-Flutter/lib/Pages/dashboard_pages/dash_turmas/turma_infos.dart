@@ -28,6 +28,7 @@ class _TurmaInfosState extends State<TurmaInfos> {
   List<String> yLabel = [];
   List<FlSpot> trabalhosLine = [];
   List<FlSpot> mediaLine = [];
+  List trabalhos = [];
 
   void _getData() async{
 
@@ -68,6 +69,10 @@ class _TurmaInfosState extends State<TurmaInfos> {
         for(int i = 0; i < labels.length; i++){
           xTrabalhoLine.add(i.toDouble());
           xNivelLine.add(i.toDouble());
+          var trabalhosList = dados[labels[i]]['trabalhos'];
+          for(int i = 0; i < trabalhosList.length; i++){
+            trabalhos.add(trabalhosList[i]);
+          }
         }
 
         for(int i = 0; i < xTrabalhoLine.length; i++){
@@ -95,8 +100,6 @@ class _TurmaInfosState extends State<TurmaInfos> {
 
     nowDay = Jiffy().format('yyy-MM-dd').toString(); // Dia atual
     beforeDay = Jiffy(nowDay, 'yyy-MM-dd').subtract(days: 6).toString().split(' ')[0]; // 7 dias de diferença inicialmente
-
-    _getData();
   }
 
   @override
@@ -137,22 +140,7 @@ class _TurmaInfosState extends State<TurmaInfos> {
             backdropEnabled: true,
             borderRadius: radius,
             color: Colors.black54,
-            collapsed: Container(
-              decoration: BoxDecoration(
-                  borderRadius: radius
-              ),
-              child: Center(
-                child: Image.asset("imagens/line.png", height: 70.0,),
-              ),
-            ),
-            panelBuilder: (ScrollController sc) => _scrollingList(sc),
-            /*panel: Container(
-              child: ListView(
-                children: [
-                  // Informações detalhadas
-                ],
-              ),
-            ),*/
+            panelBuilder: (ScrollController sc) => hasData ? _scrollingList(sc, trabalhos) : null,
           )
         ],
       ),
@@ -265,14 +253,36 @@ class _TurmaInfosState extends State<TurmaInfos> {
 
 
 // Este Widget Cria a lista dentro do Slide Up
-Widget _scrollingList(ScrollController sc){
+Widget _scrollingList(ScrollController sc, List trabalhosInfo){
   return ListView.builder(
     controller: sc,
-    itemCount: 1,
-    itemBuilder: (BuildContext context, int i){
+    itemCount: trabalhosInfo.length,
+    itemBuilder: (BuildContext context, int index){
       return Padding(
-        padding: const EdgeInsets.all(58.0),
-        child: Text("$i"),
+        padding: const EdgeInsets.only(
+          top: 16.0,
+          right: 12.0,
+          left: 12.0
+        ),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: ListTile(
+            trailing: Text("${trabalhosInfo[index]['dataTrabalho']}"),
+            leading: Icon(Icons.book),
+            title: Text(trabalhosInfo[index]['nomeTrabalho']),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(
+                top: 6.0,
+                bottom: 3.0,
+              ),
+              child: Text("Descrição: ${trabalhosInfo[index]['descricaoTurma']}\n"
+                  "Nível: ${trabalhosInfo[index]['nivelTrabalho']}"
+              ),
+            ),
+          ) ,
+        ),
       );
     },
   );
