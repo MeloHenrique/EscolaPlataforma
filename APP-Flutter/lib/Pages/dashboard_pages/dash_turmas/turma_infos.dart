@@ -110,6 +110,20 @@ class _TurmaInfosState extends State<TurmaInfos> {
         centerTitle: true,
         title: Text("Estatísticas"),
         backgroundColor: Colors.tealAccent,
+        actions: [
+          Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.filter_list),
+                onPressed: () { Scaffold.of(context).openEndDrawer(); },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
+        ],
+      ),
+      endDrawer: Drawer(
+        child: Container(),
       ),
       body: Stack(
         children: [
