@@ -26,6 +26,7 @@ dependencies:
   pull_to_refresh: ^1.6.1
   shared_preferences: ^0.5.8
   pin_code_fields: ^4.0.0
+  some_calendar: ^1.2.6
   flare_loading: ^2.1.1
   fl_chart: ^0.11.0
   jiffy: ^3.0.1
@@ -72,7 +73,6 @@ flutter:
     - imagens/report128.png
     - packages/time_machine/data/cultures/cultures.bin
     - packages/time_machine/data/tzdb/tzdb.bin
-    - imagens/line.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

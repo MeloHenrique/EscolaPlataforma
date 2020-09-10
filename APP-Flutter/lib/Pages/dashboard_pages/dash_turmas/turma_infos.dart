@@ -5,6 +5,8 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:some_calendar/some_calendar.dart';
+
 
 class TurmaInfos extends StatefulWidget {
   final socket;
@@ -21,28 +23,29 @@ class _TurmaInfosState extends State<TurmaInfos> {
 
   RefreshController _refreshController = RefreshController(initialRefresh: true);
   BorderRadiusGeometry radius;
-  var nowDay;
-  var beforeDay;
   bool hasData = false;
   List<String> xLabel = [];
   List<String> yLabel = [];
   List<FlSpot> trabalhosLine = [];
   List<FlSpot> mediaLine = [];
   List trabalhos = [];
+  List<DateTime> selectedDates;
+  List selectedDatesStr = [];
 
   void _getData() async{
-
-    widget.socket.emit('GetDataInfo', ([widget.token, widget.idTurma, nowDay, beforeDay]));
+    widget.socket.emit('GetDataInfo', ([widget.token, widget.idTurma, selectedDatesStr]));
     setState(() {
       hasData = false;
     });
     widget.socket.on('DataInfoGet', (dados){
+      //print(dados);
       setState(() {
 
         xLabel.clear();
         yLabel.clear();
         trabalhosLine.clear();
         mediaLine.clear();
+        trabalhos.clear();
 
         var labels = dados.keys.toList();
         int yMaior = 5;
@@ -98,8 +101,11 @@ class _TurmaInfosState extends State<TurmaInfos> {
       topRight: Radius.circular(24.0),
     );
 
-    nowDay = Jiffy().format('yyy-MM-dd').toString(); // Dia atual
-    beforeDay = Jiffy(nowDay, 'yyy-MM-dd').subtract(days: 6).toString().split(' ')[0]; // 7 dias de diferença inicialmente
+
+    for(int i = 0; i <= 6; i++){
+      selectedDatesStr.add(Jiffy(Jiffy().format('yyy-MM-dd').toString(), 'yyy-MM-dd').subtract(days: i).toString().split(' ')[0]);
+    }
+
   }
 
   @override
@@ -123,7 +129,44 @@ class _TurmaInfosState extends State<TurmaInfos> {
         ],
       ),
       endDrawer: Drawer(
-        child: Container(),
+        child: ListView(
+          children: [
+
+            FlatButton(
+              child: Text("Alterar Datas"),
+              onPressed: () async{
+                showDialog(
+                    context: context,
+                    builder: (_) => SomeCalendar(
+                      mode: SomeMode.Range,
+                      textColor: Colors.white,
+                      labels: Labels(
+                        dialogDone: "Modificar",
+                        dialogCancel: "Cancelar",
+                        dialogRangeFirstDate: "Data inicial",
+                        dialogRangeLastDate: "Data final"
+                      ),
+                      startDate: Jiffy().subtract(years: 1),
+                      lastDate: Jiffy().add(years: 1),
+                      selectedDates: selectedDates,
+                      isWithoutDialog: false,
+                      primaryColor: Colors.teal,
+                      done: (date) {
+                        setState(() {
+                          selectedDatesStr.clear();
+                          selectedDates = date;
+                          for(int i = selectedDates.length - 1; i >= 0 ; i--){
+                            selectedDatesStr.add(selectedDates[i].toString().split(' ')[0]);
+                          }
+                        });
+                        _refreshController.requestRefresh();
+                      },
+                    )
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Stack(
         children: [
