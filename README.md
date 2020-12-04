@@ -4,7 +4,7 @@ Este Projeto começou a ser desenvolvido com o intuito de ajudar os professores 
 
 ## Utilização
 
-Qualquer pessoa pode modificar o código e distribuir, para isso basta fazer o download do projeto.
+Qualquer pessoa pode modificar o código e distribuir, para isso basta fazer o download do projeto, na pasta "APP-FLUTTER" tem todo o código da aplicação e na pasta "Servidor" tem o código do servidor.
 
 Neste momento apenas o código da aplicação está disponivél, mas futuramente o código do servidor será open-source também.
 Se estiver interessado no código do servidor pode contactar para o obter.
@@ -15,3 +15,4 @@ Se estiver interessado no código do servidor pode contactar para o obter.
 
 ## License
 [Apache License 2.0]
+"
